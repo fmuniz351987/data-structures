@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import dataclass
 
 import random
 from unittest import TestCase
@@ -126,7 +127,7 @@ class QueueTest(TestCase):
 		self.assertTrue(self.subject.empty())
 
 
-class ListTest(TestCase):
+class SimpleListTest(TestCase):
 	def setUp(self):
 		self.subject = List(arr=list(range(6)))
 
@@ -141,11 +142,35 @@ class ListTest(TestCase):
 		x = self.subject.delete(3)
 		self.assertEqual(x, 3)
 
-	def test_swap(self):
-		self.subject.swap(1, 2)
-		# print(self.subject)
-		self.assertEqual(self.subject.search(1), 2)
-		self.assertEqual(self.subject.search(2), 1)
+	def test_getitem(self):
+		for i in range(6):
+			self.assertEqual(self.subject[i], 5 - i)
+
+	def test_setitem(self):
+		self.subject[2] = 10
+		self.assertEqual(self.subject[2], 10)
+
+
+class KeyListTest(TestCase):
+	@dataclass
+	class Data:
+		name:str
+		age:int
+
+	def setUp(self):
+		self.subject = List(key='name')
+		for i in range(10):
+			data = self.Data(name=f'Person#{i}', age= i * 10)
+			self.subject.insert(data)
+
+	def test_delete(self):
+		data = self.subject.delete(f'Person#{5}')
+		self.assertEqual(len(self.subject), 9)
+		self.assertEqual(data.age, 50)
+
+	def test_search(self):
+		data = self.subject.search(f'Person#{1}')
+		self.assertEqual(data.age, 10)
 
 
 if __name__ == '__main__':

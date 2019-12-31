@@ -1,47 +1,42 @@
-from base import Node, Iterator, UnderflowError, DynamicSet
+from base import Node, UnderflowError, DynamicSet
 
 
 class List(DynamicSet):
-	def search(self, position):
+	def __getitem__(self, index):
+		self._raise_if_invalid_index(index)
 		for i, data in enumerate(self):
-			if i == position:
+			if i == index:
+				return data
+
+	def __setitem__(self, index, data):
+		self._raise_if_invalid_index(index)
+		for i, node in enumerate(self._nodes()):
+			if i == index:
+				node.data = data
+
+	def _raise_if_invalid_index(self, index):
+		if index >= len(self) or index < 0: raise IndexError('List index out of bounds')
+
+	def search(self, key):
+		for data in self:
+			if self.key(data) == key:
 				return data
 		else:
 			return None
 
-	def swap(self, i, j):
-		if i == j: return
-		if i > j: i, j = j, i
-		if i == 0: first = self.sentinel
-		k = 0
-		for node in self._nodes():
-			if k == i - 1:
-				first = node
-			elif k == j - 1:
-				last = node
-			k += 1
-		node_i = first.delete_after()
-		node_j = last.delete_after()
-		first.insert_after(node_j)
-		last.insert_after(node_i)
-
-	def insert(self, data, position=None):
-		if position is None: position = len(self)
-		if position > len(self) or position < 0:
-			raise IndexError('Invalid position to insert on a list.')
+	def insert(self, data):
 		new_node = Node(data)
-		node = self.sentinel
-		for i in range(position):
-			node = node.next
-		node.insert_after(new_node)
+		self.sentinel.insert_after(new_node)
 		self.size += 1
 
-	def delete(self, position):
-		if position < 0 or position >= len(self):
-			raise IndexError('Invalid position to delete element from list.')
+	def delete(self, key):
 		node = self.sentinel
-		for i in range(position):
+		while node.next != self.sentinel:
+			if self.key(node.next.data) == key:
+				break
 			node = node.next
+		else:
+			return None
 		removed_node = node.delete_after()
 		self.size -= 1
 		return removed_node.data

@@ -1,8 +1,7 @@
 class Node:
-	def __init__(self, data=None, next=None, key=None):
+	def __init__(self, data=None, next=None):
 		self.data = data
 		self.next = next
-		self.key = None
 
 	def __str__(self):
 		return str(self.data)
@@ -40,11 +39,27 @@ class Iterator:
 
 
 class DynamicSet:
-	def __init__(self, arr=None):
+	def __init__(self, arr=None, key=None):
 		self.size = 0
 		self.sentinel = Node()
 		self.sentinel.next = self.sentinel
+		self.key = key
 		if arr: self.build_from_arr(arr)
+
+	@property
+	def key(self):
+		return self._key
+
+	@key.setter
+	def key(self, value):
+		if type(value) is str:
+			self._key = lambda x: getattr(x, value)
+		elif callable(value):
+			self._key = value
+		elif value is None:
+			self._key = lambda x: x
+		else:
+			raise NotImplementedError('Key must be str, callabe or None.')
 
 	def _nodes(self):
 		return Iterator(self.sentinel, stop_value=self.sentinel, use_nodes=True)
