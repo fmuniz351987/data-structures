@@ -8,6 +8,7 @@ import sort
 from stack import Stack
 from queue import Queue
 from list import List
+from hash import Hash
 
 
 class SortTest(TestCase):
@@ -150,17 +151,16 @@ class SimpleListTest(TestCase):
 		self.subject[2] = 10
 		self.assertEqual(self.subject[2], 10)
 
+@dataclass
+class Data:
+	name:str
+	age:int
 
 class KeyListTest(TestCase):
-	@dataclass
-	class Data:
-		name:str
-		age:int
-
 	def setUp(self):
 		self.subject = List(key='name')
 		for i in range(10):
-			data = self.Data(name=f'Person#{i}', age= i * 10)
+			data = Data(name=f'Person#{i}', age= i * 10)
 			self.subject.insert(data)
 
 	def test_delete(self):
@@ -171,6 +171,24 @@ class KeyListTest(TestCase):
 	def test_search(self):
 		data = self.subject.search(f'Person#{1}')
 		self.assertEqual(data.age, 10)
+
+
+class HashTest(TestCase):
+	def setUp(self):
+		self.subject = Hash(size=5, key='name')
+		for i in range(10):
+			data = Data(name=f'Person#{i}', age= i * 10)
+			self.subject.insert(data)
+
+	def test_search(self):
+		person = self.subject.search('Person#4')
+		self.assertEqual(person.age, 40)
+
+	def test_delete(self):
+		person = self.subject.delete('Person#3')
+		self.assertEqual(len(self.subject), 9)
+		self.assertEqual(person.age, 30)
+		self.assertEqual(self.subject.search(person.name), None)
 
 
 if __name__ == '__main__':
