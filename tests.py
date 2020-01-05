@@ -160,12 +160,12 @@ class KeyListTest(TestCase):
 			self.subject.insert(data)
 
 	def test_delete(self):
-		data = self.subject.delete(f'Person#{5}')
+		data = self.subject.delete(f'Person#5')
 		self.assertEqual(len(self.subject), 9)
 		self.assertEqual(data.age, 50)
 
 	def test_search(self):
-		data = self.subject.search(f'Person#{1}')
+		data = self.subject.search(f'Person#1')
 		self.assertEqual(data.age, 10)
 
 

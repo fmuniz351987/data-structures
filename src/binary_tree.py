@@ -7,11 +7,23 @@ class Tree:
 	left:'Tree' = None
 	right:'Tree' = None
 
-	def inorder_tree_walk(self):
+	def inorder_walk(self):
 		if self is None: return
-		yield from Tree.inorder_tree_walk(self.left)
+		yield from Tree.inorder_walk(self.left)
 		yield self.data
-		yield from Tree.inorder_tree_walk(self.right)
+		yield from Tree.inorder_walk(self.right)
+
+	def preorder_walk(self):
+		if self is None: return
+		yield self.data
+		yield from Tree.preorder_walk(self.left)
+		yield from Tree.preorder_walk(self.right)
+
+	def postorder_walk(self):
+		if self is None: return
+		yield from Tree.postorder_walk(self.left)
+		yield from Tree.postorder_walk(self.right)
+		yield self.data
 
 	def search(self, key):
 		pass
