@@ -4,11 +4,7 @@ from dataclasses import dataclass
 import random
 from unittest import TestCase
 
-import sort
-from stack import Stack
-from queue import Queue
-from list import List
-from hash import Hash
+from src import sort, Stack, Queue, List, Hash
 
 
 class SortTest(TestCase):
@@ -175,7 +171,7 @@ class KeyListTest(TestCase):
 
 class HashTest(TestCase):
 	def setUp(self):
-		self.subject = Hash(size=5, key='name')
+		self.subject = Hash(slots=5, key='name')
 		for i in range(10):
 			data = Data(name=f'Person#{i}', age= i * 10)
 			self.subject.insert(data)

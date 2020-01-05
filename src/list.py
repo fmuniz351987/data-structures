@@ -1,4 +1,4 @@
-from base import Node, UnderflowError, DynamicSet
+from .base import Node, UnderflowError, DynamicSet
 
 
 class List(DynamicSet):

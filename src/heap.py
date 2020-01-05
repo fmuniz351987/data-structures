@@ -1,4 +1,4 @@
-from base import swap
+from .base import swap
 
 class Heap:
 	@staticmethod

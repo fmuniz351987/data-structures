@@ -1,9 +1,9 @@
 from math import inf
 from random import randint
 
-from base import swap
-from stack import Stack
-from heap import Heap
+from .base import swap
+from .stack import Stack
+from .heap import Heap
 
 def insertion_sort(arr):
 	for j in range(len(arr)):

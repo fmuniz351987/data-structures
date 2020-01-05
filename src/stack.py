@@ -1,4 +1,4 @@
-from base import UnderflowError, Node, DynamicSet
+from .base import UnderflowError, Node, DynamicSet
 
 
 class Stack(DynamicSet):

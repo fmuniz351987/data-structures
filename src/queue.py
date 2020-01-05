@@ -1,4 +1,4 @@
-from base import Node, Iterator, UnderflowError, DynamicSet
+from .base import Node, Iterator, UnderflowError, DynamicSet
 
 
 class Queue(DynamicSet):

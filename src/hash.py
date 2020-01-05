@@ -1,5 +1,5 @@
-from base import DynamicSet
-from list import List
+from .base import DynamicSet
+from .list import List
 
 
 class Hash(DynamicSet):
