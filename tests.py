@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import random
 from unittest import TestCase
 
-from src import sort, Stack, Queue, List, Hash
+from src import sort, Stack, Queue, List, Hash, Tree
 
 
 class SortTest(TestCase):
@@ -186,6 +186,19 @@ class HashTest(TestCase):
 		self.assertEqual(person.age, 30)
 		self.assertEqual(self.subject.search(person.name), None)
 
+
+class BinaryTreeTest(TestCase):
+	def setUp(self):
+		self.subject = Tree(data=2)
+		self.subject.left = Tree(data=1, parent=self.subject)
+		self.subject.right = Tree(data=3, parent=self.subject)
+		self.subject.size = 3
+
+	def setUp(self):
+		self.subject = Tree(arr=[2,1,3])
+
+	def test(self):
+		print(self.subject)
 
 if __name__ == '__main__':
 	unittest.main()

@@ -5,3 +5,4 @@ from .heap import Heap
 from .list import List
 from .queue import Queue
 from .stack import Stack
+from .binary_tree import Tree
